@@ -1,14 +1,14 @@
 terraform {
   required_providers {
     google = {
-      source = "hashicorp/google"
+      source  = "hashicorp/google"
       version = "3.5.0"
     }
   }
 }
 
 provider "google" {
-  credentials = file("xlear-app-88c3cb8d1b4b.json")
+  credentials = file("service-account.json")
 
   project = "xlear-app"
   region  = "us-central1"
