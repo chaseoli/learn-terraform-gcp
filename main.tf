@@ -8,11 +8,11 @@ terraform {
 }
 
 provider "google" {
-  credentials = file("service-account.json")
+  credentials = file(var.credentials_file)
+  project     = var.project
+  region      = var.region
+  zone        = var.zone
 
-  project = "xlear-app"
-  region  = "us-central1"
-  zone    = "us-central1-c"
 }
 
 resource "google_compute_network" "vpc_network" {
@@ -35,20 +35,4 @@ resource "google_compute_instance" "vm_instance" {
     access_config {
     }
   }
-}
-
-resource "google_compute_firewall" "vpc_network" {
-  name    = "test-firewall"
-  network = google_compute_network.vpc_network.name
-
-  allow {
-    protocol = "icmp"
-  }
-
-  allow {
-    protocol = "tcp"
-    ports    = ["80", "8080", "1000-2000"]
-  }
-
-  source_tags = ["web"]
 }
